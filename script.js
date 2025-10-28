@@ -1,8 +1,8 @@
-// الحساب الأساسي للتليجرام (استبدل لو عايز)
+// الحساب الأساسي للتليجرام (بدّل لو حابب)
 const TELEGRAM_USERNAME = 'k_a_p_oo2'; // بدون @
 const TELEGRAM_LINK_BASE = `https://t.me/${TELEGRAM_USERNAME}`;
 
-// دوال عامة
+/* فتح روابط عادية */
 function openLink(url) {
   window.open(url, "_blank");
 }
@@ -11,8 +11,8 @@ function openInfoPage() {
   const newWindow = window.open("", "_blank");
   newWindow.document.write(`
     <html lang="ar" dir="rtl">
-    <head><meta charset="utf-8"><title>معلومات كابو</title>
-    <style>body{background:linear-gradient(135deg,#000,#1a1a1a);color:white;font-family:Tajawal;padding:50px;text-align:center}h2{color:#ffcc00}p{line-height:1.8}button{margin-top:20px;padding:10px 20px;background:#ffcc00;border-radius:10px;border:none;cursor:pointer}</style>
+    <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>معلومات كابو</title>
+    <style>body{background:linear-gradient(135deg,#000,#1a1a1a);color:white;font-family:Tajawal;padding:40px;text-align:center}h2{color:#ffcc00}p{line-height:1.8}button{margin-top:20px;padding:10px 20px;background:#ffcc00;border-radius:10px;border:none;cursor:pointer}</style>
     </head>
     <body>
       <h2>اهلا وسهلا بكم في موقع كابو اليوتيوبر 🎬</h2>
@@ -23,29 +23,31 @@ function openInfoPage() {
   newWindow.document.close();
 }
 
-/* ===== صفحة المتجر (تفتح نافذة جديدة ديناميكيًا) ===== */
-function openStorePage() {
+/* ---- فتح صفحة المتجر مع إمكانية تمرير id لفتح المودال مباشرة ----
+   openStorePage()  -> يفتح صفحة المتجر عادية
+   openStorePage('p_site') -> يفتح صفحة المتجر ثم يفتح مودال طلب المنتج p_site */
+function openStorePage(productId) {
   const newWindow = window.open("", "_blank");
 
+  // قائمة المنتجات (محدثة ومتوافقة مع أزرارك السريعة)
   const products = [
-    { id: 'p1', title: "رقم تلجرام", price: "10ج", qty: "الكمية: 1" },
-    { id: 'p2', title: "تعديل على نسخة واتس", price: "10ج" },
-    { id: 'p3', title: "كيب تحفيل + كيب مجاال", price: "5ج" },
-    { id: 'p4', title: "نسخه واتس + نسخه تلي", price: "10ج" },
-    { id: 'p5', title: "ادوات تريمكس", price: "5ج" },
-    { id: 'p6', title: "فيرروسات", price: "5ج" },
-    { id: 'p7', title: "بوت كراش", price: "10ج" },
-    { id: 'p8', title: "كيف صنع بوت اختراق", price: "5ج" },
-    { id: 'p9', title: "طريقه الأرقام", price: "15ج" }
+    { id: 'p_site', title: "طريقة عمل موقع", price: "15ج", qty: "" },
+    { id: 'p_whatsapp', title: "رقم واتس", price: "9ج", qty: "" },
+    { id: 'p_tusers', title: "يوزرات تلي", price: "15ج", qty: "" },
+    { id: 'p_60pb', title: "60 شدة ايدي ببجي", price: "45ج", qty: "" },
+    { id: 'p_azdhar', title: "ازدهار أول ايدي", price: "45ج", qty: "" },
+    { id: 'p_topup', title: "شحن رصيد ونت (سعر حسب الشركة)", price: "سعر حسب الشركة", qty: "" },
+    { id: 'p_app', title: "عمل تطبيق مجال", price: "15ج", qty: "" },
+    { id: 'p_audit', title: "فحص أمني للقنوات (خدمة قانونية)", price: "20ج", qty: "" }
   ];
 
-  // HTML صفحة المتجر مع تحذير ومودال
+  // ندرج صفحة المتجر كاملة (مع سكربت داخلي يتحقق من location.hash لفتح منتج محدد)
   let html = `
   <html lang="ar" dir="rtl">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>متجر كابو</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <style>
       body{background:linear-gradient(135deg,#000,#1a1a1a);color:#fff;font-family:Tajawal;padding:20px;margin:0}
       .store-header{text-align:center}
@@ -82,19 +84,20 @@ function openStorePage() {
     </div>
 
     <div class="warning">
-      ⚠️ <strong>تحذير مهم:</strong> بعض المنتجات المدرجة قد تكون ضارة أو مخالفة للقوانين أو سياسة منصات التواصل. الطلب مسؤوليتك الكاملة. لا أتحمل أي تبعات قانونية أو أخلاقية عن استخدام مواد ضارة. برجاء الالتزام بالقوانين المحلية والدولية.
+      ⚠️ <strong>تحذير مهم:</strong> بعض الخدمات قد تكون حساسة. تأكد من القانون والمحافظة على الأخلاق. أي معاملات تتم عبر التليجرام هي بين البائع والمشتري ومسؤولية المستخدم.
     </div>
 
     <div class="products-grid">
   `;
 
+  // توليد البطاقات
   products.forEach(prod => {
     html += `
       <div class="card">
         <h3>${escapeHtml(prod.title)}</h3>
         <div class="price">السعر: ${escapeHtml(prod.price)}</div>
         ${prod.qty ? `<div class="qty">${escapeHtml(prod.qty)}</div>` : ''}
-        <div><button class="buy-btn" onclick="parent.buyProduct('${escapeJs(prod.title)}','${escapeJs(prod.price)}')">🛒 شراء الآن</button></div>
+        <div><button class="buy-btn" onclick="buyProduct('${escapeJs(prod.id)}')">🛒 شراء الآن</button></div>
       </div>
     `;
   });
@@ -107,12 +110,11 @@ function openStorePage() {
       <div class="notes">ملاحظة: الضغط على "شراء الآن" يفتح نافذة للنسخ والفتح للتواصل مع الحساب الأساسي.</div>
     </div>
 
-    <!-- مودال داخل نافذة المتجر -->
-    <div id="modal" class="modal">
+    <!-- مودال -->
+    <div id="modal" class="modal" aria-hidden="true">
       <div class="modal-box" role="dialog" aria-modal="true">
         <button class="close-x" onclick="closeModal()">✖</button>
         <h3>تأكيد الطلب</h3>
-        <div>المنتَج الذي ستطلبه مُعدّ في رسالة جاهزة أرسِلها لكيفية التواصل مع الحساب الأساسي.</div>
         <div class="msg" id="modalMsg">...</div>
         <div class="actions">
           <button class="small-btn copy-btn" id="copyBtn">📋 نسخ &amp; فتح التليجرام</button>
@@ -124,46 +126,56 @@ function openStorePage() {
     </div>
 
     <script>
-      // المساحة المخصصة لدوال التواصل مع النافذة الأم
-      function escapeHtmlInner(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-      // دوال التفاعل داخل نافذة المتجر:
+      // المنتجّات المتطابقة داخل نافذة المتجر
+      const PRODUCTS = ${JSON.stringify(products)};
+
       const TELEGRAM_USERNAME = '${TELEGRAM_USERNAME}';
       const TELEGRAM_LINK_BASE = 'https://t.me/' + TELEGRAM_USERNAME;
 
-      // دالة يُستدعى منها من parent
-      window.buyProduct = function(prodTitle, price){
-        const msg = 'طلب منتج من متجر كابو%0A' + 'المنتج: ' + prodTitle + '%0A' + 'السعر: ' + price + '%0A' + 'المرسل: [ضع اسمك هنا أو رقمك]';
-        // نص منسق للعرض (غير مشفَّر)
-        const displayMsg = 'طلب منتج من متجر كابو\\nالمنتج: ' + prodTitle + '\\nالسعر: ' + price + '\\nالمرسل: [ضع اسمك هنا أو رقمك]';
+      function escapeHtmlInner(s){ return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+      // فتح المودال مع تجهيز الرسالة
+      function buyProduct(prodId){
+        const prod = PRODUCTS.find(p => p.id === prodId);
+        if(!prod) return;
+        const displayMsg = 'طلب منتج من متجر كابو\\nالمنتج: ' + prod.title + '\\nالسعر: ' + prod.price + '\\nالمرسل: [ضع اسمك هنا أو رقمك]';
         document.getElementById('modalMsg').textContent = displayMsg;
-        // عرض المودال
         document.getElementById('modal').classList.add('show');
 
-        // زر النسخ & فتح
         document.getElementById('copyBtn').onclick = async function(){
           try {
             await navigator.clipboard.writeText(displayMsg.replace(/\\n/g,'\\n'));
-            // فتح التليجرام (المستخدم سيجد الرسالة في الحافظة للصقها)
             window.open(TELEGRAM_LINK_BASE, '_blank');
-          } catch (e) {
-            // لو النسخ فشل، حاول فتح التليجرام مع param text
+          } catch(e){
             window.open(TELEGRAM_LINK_BASE + '?text=' + encodeURIComponent(displayMsg), '_blank');
           }
         };
 
-        // زر حاول الإرسال تلقائيًا (يعتمد على المتصفح/جهاز المستخدم)
         document.getElementById('openBtn').onclick = function(){
-          const urlWithText = TELEGRAM_LINK_BASE + '?text=' + encodeURIComponent('طلب منتج من متجر كابو\\nالمنتج: ' + prodTitle + '\\nالسعر: ' + price + '\\nالمرسل: [ضع اسمك هنا أو رقمك]');
+          const urlWithText = TELEGRAM_LINK_BASE + '?text=' + encodeURIComponent(displayMsg);
           window.open(urlWithText, '_blank');
         };
-      };
+      }
 
       function closeModal(){
         document.getElementById('modal').classList.remove('show');
       }
 
-      // وظائف مساعدة (escape)
-      function escapeHtml(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+      // إذا فتحنا الصفحة مع هاش (#p_site مثلا) - افتح مباشرة مودال المنتج
+      window.addEventListener('DOMContentLoaded', function(){
+        try {
+          const h = (location.hash || '').replace('#','');
+          if(h) {
+            // مدّة صغيرة عشان العناصر يتعرضوا أولًا
+            setTimeout(function(){
+              buyProduct(h);
+            }, 250);
+          }
+        } catch(e){}
+      });
+
+      // دوال مساعدة
+      function escapeHtml(s){ return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
     </script>
 
   </body>
@@ -172,9 +184,19 @@ function openStorePage() {
 
   newWindow.document.write(html);
   newWindow.document.close();
+
+  // لو فيه productId، نضع هاش علشان صفحة المتجر تشغّل المودال مباشرة
+  if (productId) {
+    try {
+      // وضع الهَاش بعد كتابة المحتوى
+      newWindow.location.hash = productId;
+    } catch(e) {
+      // أحيانًا المتصفح يمنع التعديل الفوري - لكن عادة يعمل
+    }
+  }
 }
 
-// دوال مساعدة النسخة الرئيسية (index)
+/* دوال مساعدة للصفحة الرئيسية (escape) */
 function escapeHtml(text){
   if (!text) return '';
   return String(text).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
