@@ -1,0 +1,70 @@
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes glow {
+  0% { box-shadow: 0 0 10px #ffcc00; }
+  50% { box-shadow: 0 0 25px #ffcc00; }
+  100% { box-shadow: 0 0 10px #ffcc00; }
+}
+
+body {
+  background: linear-gradient(135deg, #000000, #1a1a1a);
+  color: white;
+  font-family: "Tajawal", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+}
+
+.container {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 40px;
+  border-radius: 25px;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
+  width: 90%;
+  max-width: 400px;
+  animation: fadeIn 1s ease-out;
+}
+
+.title {
+  font-size: 2.2em;
+  margin-bottom: 20px;
+  color: #ffcc00;
+  text-shadow: 0 0 15px #ffcc00;
+  animation: glow 2s infinite alternate;
+}
+
+.info {
+  margin-bottom: 25px;
+  font-size: 1.1em;
+  line-height: 1.6;
+  animation: fadeIn 1.5s ease-out;
+}
+
+button {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 15px;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+  background: #ffcc00;
+  color: black;
+  font-weight: bold;
+  animation: fadeIn 1.5s ease-out;
+}
+
+button:hover {
+  background: #ffaa00;
+  transform: scale(1.08);
+  box-shadow: 0 0 20px #ffaa00;
+}
